@@ -1,0 +1,38 @@
+﻿@model WebUI.Models.CartSummaryViewModel
+
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+    @if (Model.Cart.CartLines.Any())
+    {
+        @foreach (var item in Model.Cart.CartLines)
+        {
+            <li>
+                <a class="dropdown-item">
+                    @item.Product.ProductName
+                    <span class="badge bg-primary">@item.Quantity</span>
+                </a>
+            </li>
+        }
+        <li><hr class="dropdown-divider" /></li>
+    }
+    else
+    {
+        <li>
+            <span class="dropdown-item">Sepetiniz boş</span>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+    }
+
+    <li>
+        <a class="dropdown-item">
+            <i class="bi bi-cart-fill me-2"></i>
+            Toplam: @Model.Cart.Total
+        </a>
+    </li>
+
+
+    <li><hr class="dropdown-divider" /></li>
+
+    <li>
+        <a class="dropdown-item" asp-controller="Cart" asp-action="List">Go to cart details</a>
+    </li>
+</ul>
