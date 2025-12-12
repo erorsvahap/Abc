@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using WebUI.Models;
 using WebUI.Services;
 
 namespace WebUI.Controllers
@@ -23,9 +24,19 @@ namespace WebUI.Controllers
            var cart = _cartSessionService.GetCart();
             _cartService.AddToCart(cart, productToBeAdded);
             _cartSessionService.SetCart(cart);
-            TempData.Add("message",String.Format("{0} has been added to cart!",productToBeAdded.ProductName));
+            TempData.Add("message",String.Format("{0} --> ürün sepete eklendi",productToBeAdded.ProductName));
            return  RedirectToAction("Index","Product");
 
+        }
+
+        public ActionResult List()
+        {
+           var cart = _cartSessionService.GetCart();
+            CartListViewModel cartListViewModel = new CartListViewModel()
+            {
+                Cart = cart
+            };
+            return View(cartListViewModel);
         }
 
 

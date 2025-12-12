@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
+    
     public class ProductManager : IProductService
     {
         private IProductDal _productDal;
@@ -49,7 +50,7 @@ namespace Business.Concrete
 
         public void Update(Product product)
         {
-           _productDal.Update(product);
+           _productDal.Update(product); 
         }
     }
 }

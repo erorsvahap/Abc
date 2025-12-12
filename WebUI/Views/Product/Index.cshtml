@@ -8,9 +8,9 @@
     <div>
     <table class="table table-responsive">
         <tr>
-         <td>Product Name</td>
-         <td>Unit Price</td>
-         <td>Unit In Stock </td>
+         <td>Ürünler</td>
+         <td>Ürün Fiyat</td>
+         <td>Ürün Stok Mİktarı </td>
          <td></td>
         </tr>
         @foreach (var product in Model.Products)
@@ -20,7 +20,7 @@
                 <td>@product.UnitPrice</td>
                 <td>@product.UnitsInStock </td>
                 <td>
-                    <a class="btn btn-xs btn-success" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.ProductID"> add to cart </a>
+                    <a class="btn btn-xs btn-success" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.ProductID"> Sepete Ekle </a>
                 </td>
             </tr>
         }
