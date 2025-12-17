@@ -6,7 +6,7 @@ using WebUI.Models;
 
 namespace WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private IProductService _productService;

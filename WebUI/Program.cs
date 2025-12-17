@@ -2,6 +2,9 @@ using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WebUI.Entities;
 using WebUI.Middlewares;
 using WebUI.Services;
 
@@ -16,6 +19,22 @@ builder.Services.AddScoped<ICategoryService, CategoryManager>();
 builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
 builder.Services.AddScoped<ICartService, CartManager>();
 builder.Services.AddScoped<ICartSessionService,CartSessionService>();
+
+builder.Services.AddDbContext<CustomIdentityDbContext>(
+    options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=true")
+    );
+builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>().AddEntityFrameworkStores<CustomIdentityDbContext>().AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 3;
+});
+
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -41,14 +60,17 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseNodeModules(builder.Environment.ContentRootPath);
 
+
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 
 app.Run();
